@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+#   git config --global user.email "shbly1029@gmail.com"
+#   git config --global user.name "Mahmoud Alshbly"
+# git remote add origin https://github.com/MahmoudShbly/store_app.git

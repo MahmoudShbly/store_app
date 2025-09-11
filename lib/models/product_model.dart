@@ -1,5 +1,7 @@
 
 
+
+
 class ProductModel {
   final dynamic id;
   final String title;
@@ -8,6 +10,7 @@ class ProductModel {
   final String image;
   final String category;
   final RatingModel rating;
+   bool isFavouriet;
  
 
   ProductModel({
@@ -18,6 +21,7 @@ class ProductModel {
     required this.image,
     required this.rating,
     required this.category,
+     this.isFavouriet = false,
 
  
   });
@@ -30,7 +34,8 @@ class ProductModel {
       description: jsonData['description'],
       image: jsonData['image'],
       category: jsonData['category'],
-      rating:jsonData['rateing']!=null? RatingModel.fromJson(jsonData['rating']):RatingModel(rate: 0.0, count: 0)
+      rating:jsonData['rating']!=null? RatingModel.fromJson(jsonData['rating']):RatingModel(rate: 0.0, count: 0),
+      
  
     );
   }

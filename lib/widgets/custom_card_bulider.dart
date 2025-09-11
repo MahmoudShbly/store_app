@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/cubit/app_cubit.dart';
 
 import 'package:store_app/models/product_model.dart';
-import 'package:store_app/screens/update_product_page.dart';
+import 'package:store_app/screens/details_page.dart';
 
 // ignore: must_be_immutable
 class CustomCardBulider extends StatelessWidget {
@@ -9,63 +11,70 @@ class CustomCardBulider extends StatelessWidget {
   ProductModel product;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProductPage(product: product,)));},
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          Container(
-            width: 200,
-            height: 120,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(.1),
-                  blurRadius: 50,
-                  spreadRadius: 0,
-                  offset: Offset(5, 5),
-                ),
-              ],
-            ),
-            child: Card(
-              color: Colors.white,
-              elevation: 10,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      product.title.substring(0, 15),
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                    SizedBox(height: 7),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          r'$'
-                          '${product.price.toString()}',
-                        ),
-                        Icon(
-                          Icons.favorite_sharp,
-                          color:Colors.grey,
-                        ),
-                      ],
+    return BlocConsumer<AppCubit, AppState>(
+      listener: (context, state) {
+
+      },
+      builder: (context, state) {
+        AppCubit cubit = AppCubit.get(context);
+        return GestureDetector(
+          onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage(product: product,)));},
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                width: 200,
+                height: 120,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(.1),
+                      blurRadius: 50,
+                      spreadRadius: 0,
+                      offset: Offset(5, 5),
                     ),
                   ],
                 ),
+                child: Card(
+                  color: Colors.white,
+                  elevation: 10,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          product.title.substring(0, 15).toLowerCase(),
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        // SizedBox(height: 3),
+                        Row(
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              r'$'
+                              '${product.price.toString()}',
+                            ),
+                            IconButton(onPressed:()=>cubit.changeFavouriteState(product) , icon: Icon(Icons.favorite_sharp,
+                              color:product.isFavouriet? Colors.red:Colors.grey,))
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-            ),
+              Positioned(
+                right: 32,
+                bottom: 100,
+                child: Image.network(product.image, height: 100, width: 100),
+              ),
+            ],
           ),
-          Positioned(
-            right: 32,
-            bottom: 85,
-            child: Image.network(product.image, height: 100, width: 100),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
