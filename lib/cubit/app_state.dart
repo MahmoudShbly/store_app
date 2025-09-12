@@ -5,3 +5,4 @@ sealed class AppState {}
 
 final class AppInitial extends AppState {}
 final class AppFavouriteChangeState extends AppState {}
+final class AppChangeBottomNavigationBarState extends AppState {}

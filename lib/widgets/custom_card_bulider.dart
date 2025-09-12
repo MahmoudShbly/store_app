@@ -57,7 +57,7 @@ class CustomCardBulider extends StatelessWidget {
                               r'$'
                               '${product.price.toString()}',
                             ),
-                            IconButton(onPressed:()=>cubit.changeFavouriteState(product) , icon: Icon(Icons.favorite_sharp,
+                            IconButton(onPressed:()=>cubit.changeFavouriteState(product) , icon: Icon(Icons.favorite,
                               color:product.isFavouriet? Colors.red:Colors.grey,))
                           ],
                         ),
