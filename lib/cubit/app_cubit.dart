@@ -14,10 +14,11 @@ class AppCubit extends Cubit<AppState> {
   void changeFavouriteState (ProductModel product){
     product.isFavouriet=!product.isFavouriet;
     if(product.isFavouriet) {
-      favouriteProducts.add(product);
+      bool alredyExist = favouriteProducts.any((item)=>item.id==product.id);
+      if(!alredyExist){favouriteProducts.add(product);}
     }
     else{
-      favouriteProducts.remove(product);
+      favouriteProducts.removeWhere((item)=>product.id==item.id);
     }
     emit(AppFavouriteChangeState()); 
   }
