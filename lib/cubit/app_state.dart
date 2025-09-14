@@ -6,3 +6,6 @@ sealed class AppState {}
 final class AppInitial extends AppState {}
 final class AppFavouriteChangeState extends AppState {}
 final class AppChangeBottomNavigationBarState extends AppState {}
+final class AppLoadingProductsState extends AppState {}
+final class AppErrorLoadingProductsState extends AppState {}
+final class AppSuccessLoadingProductsState extends AppState {}

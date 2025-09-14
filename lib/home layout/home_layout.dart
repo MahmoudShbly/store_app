@@ -31,7 +31,7 @@ class HomeLayout extends StatelessWidget {
             currentIndex: cubit.currentIndex,
             items: [
               
-              BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(FontAwesomeIcons.house), label: 'Home'),
               BottomNavigationBarItem(
                 icon: Icon(FontAwesomeIcons.heart),
                 label: 'Favouriet',
@@ -40,7 +40,9 @@ class HomeLayout extends StatelessWidget {
             
             onTap: (index)=>cubit.changeBottomNavigationBarIndex(index),
           ),
-          body: cubit.screens[cubit.currentIndex],
+          body: cubit.currentIndex == 0
+              ? const HomePage()
+              : FavourietProductsPage(products: cubit.favouriteProducts),
     
         );
       },

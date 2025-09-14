@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/cubit/app_cubit.dart';
 import 'package:store_app/home%20layout/home_layout.dart';
-import 'package:store_app/screens/home_page.dart';
 
 void main() {
   runApp(const StoreApp());
@@ -14,7 +13,7 @@ class StoreApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AppCubit(),
+      create: (context) => AppCubit()..getAllProduct(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: HomeLayout(),

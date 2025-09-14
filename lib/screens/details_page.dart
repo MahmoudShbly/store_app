@@ -68,7 +68,7 @@ class DetailsPage extends StatelessWidget {
                       TextButton(
                         onPressed: () {},
                         child: Container(
-                          padding: EdgeInsets.all(12),
+                          padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(12),

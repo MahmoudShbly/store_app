@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/cubit/app_cubit.dart';
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/services/get_all_products.dart';
 import 'package:store_app/widgets/custom_card_bulider.dart';
@@ -9,30 +10,37 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 75, right: 16, left: 16),
-      child: FutureBuilder<List<ProductModel>>(
-        future: AllProductsService().getAllProduct(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<ProductModel> products = snapshot.data!;
-            return GridView.builder(
-              itemCount: products.length,
+    return BlocConsumer<AppCubit, AppState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        AppCubit cubit = AppCubit.get(context);
+        
+        if (state is AppLoadingProductsState) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is AppErrorLoadingProductsState) {
+          return const Center(child: Text('Failed to load products.'));
+        } else {
+          return Padding(
+            padding: const EdgeInsets.only(top: 75, right: 16, left: 16),
+            child: GridView.builder(
+              itemCount:cubit.allProducts.length,
               clipBehavior: Clip.none,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 85,
                 childAspectRatio: 1.3,
               ),
-              itemBuilder: (context, index) =>
-                  CustomCardBulider(product: products[index]),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+              itemBuilder: (context, index) => 
+                  CustomCardBulider(
+                    product: cubit.allProducts[index],
+                  ),
+            ),
+          );
+        }
+      },
     );
   }
 }
