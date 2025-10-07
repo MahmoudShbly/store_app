@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app/cubit/app_cubit.dart';
 import 'package:store_app/models/product_model.dart';
+import 'package:store_app/widgets/custom_shimmer_card.dart';
 
 // ignore:must_be_immutable
 class DetailsPage extends StatelessWidget {
@@ -36,11 +38,16 @@ class DetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Center(
-                    child: Image.network(
-                      product.image,
-                      height: 300,
-                      width: 200,
+                    child: CachedNetworkImage(
+                      imageUrl: product.image,
+                      height: 250,
+                      width: 250,
+                      placeholder: (context, url) => const CustomShimmerCard(width: 250,height: 250,),
+                      
                     ),
+                  ),
+                  SizedBox(
+                    height: 16,
                   ),
                   Text(
                     '${product.title}:',

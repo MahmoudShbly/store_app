@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/cubit/app_cubit.dart';
 
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/screens/details_page.dart';
+import 'package:store_app/widgets/custom_shimmer_card.dart';
 
 // ignore: must_be_immutable
 class CustomCardBulider extends StatelessWidget {
@@ -12,13 +14,18 @@ class CustomCardBulider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppState>(
-      listener: (context, state) {
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         AppCubit cubit = AppCubit.get(context);
         return GestureDetector(
-          onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage(product: product,)));},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailsPage(product: product),
+              ),
+            );
+          },
           child: Stack(
             clipBehavior: Clip.none,
             children: [
@@ -28,7 +35,7 @@ class CustomCardBulider extends StatelessWidget {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(.1),
+                      color: Colors.grey.withValues(alpha: .1),
                       blurRadius: 50,
                       spreadRadius: 0,
                       offset: Offset(5, 5),
@@ -57,8 +64,16 @@ class CustomCardBulider extends StatelessWidget {
                               r'$'
                               '${product.price.toString()}',
                             ),
-                            IconButton(onPressed:()=>cubit.changeFavouriteState(product) , icon: Icon(Icons.favorite,
-                              color:product.isFavouriet? Colors.red:Colors.grey,))
+                            IconButton(
+                              onPressed: () =>
+                                  cubit.changeFavouriteState(product),
+                              icon: Icon(
+                                Icons.favorite,
+                                color: product.isFavouriet
+                                    ? Colors.red
+                                    : Colors.grey,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -69,7 +84,13 @@ class CustomCardBulider extends StatelessWidget {
               Positioned(
                 right: 32,
                 bottom: 100,
-                child: Image.network(product.image, height: 100, width: 100),
+                child: CachedNetworkImage(
+                  imageUrl: product.image,
+                  height: 100,
+                  width: 100,
+                  placeholder: (context, url) => CustomShimmerCard(),
+                  
+                ),
               ),
             ],
           ),

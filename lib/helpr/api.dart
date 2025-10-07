@@ -35,14 +35,13 @@ class Api {
   }
 
   Future<dynamic> put({required String url, @required dynamic body}) async {
-    print('url :$url body :$body');
     http.Response response = await http.put(
       Uri.parse(url),
       body:
           body, //there is another parm called headers is contains auth and content !
     );
     if (response.statusCode == 200) {
-          print(response.body);
+          
       return jsonDecode(response.body);
     } else {
       throw Exception(
